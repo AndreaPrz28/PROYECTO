@@ -4,7 +4,7 @@
 #define REN 12
 #define COL 12
 
-extern int mover_personaje(char *mapa, int ren, int col);
+extern int mover_personaje(char *mapa, int ren, int col, char tecla);
 
 int menu();
 int display();
@@ -17,7 +17,7 @@ int main(){
         op = menu();
         op = display();
 
-    }while(op!=2);
+    }while(op!=5);
 }
 
 int menu(){
@@ -28,6 +28,7 @@ int menu(){
     printf("- Empezar (1)\n");
     printf("- Salir (2) \n\n");
     printf("Que opcion quieres? \n");
+    fflush(stdin);
     scanf("%d", &resp);
     printf("\n************************************\n\n");
 
@@ -37,6 +38,7 @@ int menu(){
 int display(){
 
     int opcion=0;
+    char tecla;
 
     char mapa[REN][COL] = {
                         {'#','#','#','#','#','#','#','#','#','#','#','#'},
@@ -62,14 +64,17 @@ int display(){
         }
         printf("\n||| Usa W/A/S/D para moverte |||");
         printf("\n     Presiona E para salir\n\n");
-
-        mover_personaje((char *)mapa,REN,COL);
         
+        while ((tecla = getchar()) == '\n');
+        
+        mover_personaje((char *)mapa,REN,COL,tecla);
+        
+        printf("\n     Presiona E para salir\n\n");
         //printf(" ~~~ Reiniciar (1)");
         //printf(" ~~~ Salir (2)");
         opcion++;
     
-    }while(opcion != 2);
+    }while(opcion != 5);
 
     return opcion;
 }
