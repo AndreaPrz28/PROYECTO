@@ -10,6 +10,7 @@ extern int mover_personaje(char *mapa, int ren, int col, char tecla);
 int menu();
 int display();
 
+//-----------------------------------------------------------------------------------------------------
 
 int main(){
     int op = 0;
@@ -27,7 +28,7 @@ int main(){
             op = display();
         }
 
-    }while(op!=2);
+    }while(op!=2);  // El 2 se usa para salir del programa
 
     printf("\n\n\n\n    ~~~~~ HASTA PRONTO ~~~~~");
     Sleep(1000);
@@ -35,6 +36,8 @@ int main(){
 
     return 0;
 }
+
+//-----------------------------------------------------------------------------------------------------
 
 int menu(){
     int resp = 0; 
@@ -54,6 +57,8 @@ int menu(){
     return resp;
 }
 
+//---------------------------------------------------------------------------------------------------
+
 int display(){
 
     int opcion=0;
@@ -69,7 +74,7 @@ int display(){
                         {'#','.','#','#','#','#','#','#','.','#','.','#'},
                         {'#','.','#','.','.','.','.','#','.','#','.','#'},
                         {'#','.','#','#','#','#','.','#','.','.','.','#'},
-                        {'#','.','.','.','.','.','.','#','#','#','#','#'},
+                        {'#','.','.','.','.','.','.','#','.','#','#','#'},
                         {'#','.','#','#','#','#','.','#','.','.','.','#'},
                         {'#','.','#','.','#','#','.','#','.','#','.','#'},
                         {'#','.','.','.','.','#','.','.','.','#','X','#'},  // La x esta en la posicion mapa[10][10]
@@ -79,6 +84,7 @@ int display(){
     // Adentro de este do-while es donde vamos a estar haciendo los moviminetos para el juego
     do{
     
+
         // En estos for imprimimos la matriz e instrucciones que se estaran viendo en pantalla
         for (int i=0; i<REN; i++){
             for (int j=0; j<COL; j++){
@@ -86,13 +92,31 @@ int display(){
             }
             printf("\n");
         }
-
         printf("\n||| Usa W/A/S/D para moverte |||");
         printf("\n    Presiona r para reiniciar");
         printf("\n      Presiona e para salir\n\n");
-        
+
+
+        // Validacion para verificar si el usuario llego a la X, que es la meta
+        // para que mande mensaje de felicitaciones
+        for (int i=0; i<REN; i++){
+            for (int j=0; j<COL; j++){
+                if ('P' == mapa[10][10]){  // Esa es la posicion en la que esta la X
+                                            // Y si la P esta en esa posicion quiere decir que ya gano
+                    Sleep(800);
+                    system("cls");
+                    printf("\n\n\n\n    ~~~~~ FELICIDADES. GANASTE! ~~~~~");
+                    Sleep(1500);
+                    system("cls");
+                    return 0;   // Devuelve un 0 para que al volver al main si pueda entrar al menu
+                }
+            }
+        }
+
+
         // Capturamos la tecla que nos indicara el movimiento
         while ((tecla = getchar()) == '\n');
+
 
         // Si es r nos regresa al main, y el main nos trae de vuelta al display
         if (tecla == 'r'){
@@ -105,9 +129,10 @@ int display(){
         if (tecla == 'e'){
             system("cls");
             Sleep(800);
-            return 2;
+            opcion = 2;
         }
         
+
         // Aqui es donde mandamos nuestra informacion a lenguaje ensamblador.
         // Mandamos la matriz, renglones, columnas y la tecla seleccionada
         mover_personaje((char *)mapa,REN,COL,tecla);
@@ -116,7 +141,8 @@ int display(){
         // se pueda apreciar mejor y se vea mas fluido
         system("cls");
     
-    }while(opcion != 2);
+    }while(opcion != 2);  // Si es diferente de 2, se mantiene en blucle
+                          // ya que el 2 se usa para salir del programa
 
     return opcion;
 }
