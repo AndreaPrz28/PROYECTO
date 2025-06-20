@@ -40,7 +40,7 @@ int main(){
 //-----------------------------------------------------------------------------------------------------
 
 int menu(){
-    int resp = 0; 
+    int resp = 0;
 
     printf("\n************************************\n\n");
     printf("~~~ JUEGO DEL LABERINTO ~~~\n");
@@ -61,7 +61,6 @@ int menu(){
 
 int display(){
 
-    int opcion=0;
     char tecla;
 
     // Aqui creamos nuestra matriz y laberinto
@@ -124,15 +123,7 @@ int display(){
             Sleep(800);
             return 1;
         }
-
-        // Si es e, nos regresa al main y saldremos del programa
-        if (tecla == 'e'){
-            system("cls");
-            Sleep(800);
-            opcion = 2;
-        }
         
-
         // Aqui es donde mandamos nuestra informacion a lenguaje ensamblador.
         // Mandamos la matriz, renglones, columnas y la tecla seleccionada
         mover_personaje((char *)mapa,REN,COL,tecla);
@@ -141,8 +132,10 @@ int display(){
         // se pueda apreciar mejor y se vea mas fluido
         system("cls");
     
-    }while(opcion != 2);  // Si es diferente de 2, se mantiene en blucle
-                          // ya que el 2 se usa para salir del programa
+    }while(tecla != 'e');  // Si es diferente de 'e', se mantiene en blucle
 
-    return opcion;
+    system("cls");
+    Sleep(800);
+    return 2;  // Ya que si sale del while es que el usuario tecleo una 'e'
+               // Lo que significa que regresamos un 2 para que nos saque del juego
 }

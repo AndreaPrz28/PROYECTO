@@ -1,4 +1,4 @@
-section .text
+ section .text
     global mover_personaje
 
 mover_personaje:
@@ -22,7 +22,7 @@ mover_personaje:
 
     ; Aqui vamos a buscar donde esta la letra 'P'    
     .buscar_P:
-        cmp rbx, rdx   ; Hacemos una validacion si indice > total de elementos
+        cmp rbx, rdx   ; Hacemos una validacion si indice >= total de elementos
         jge .fin   ; Salta si es mas grande
 
         mov al, [rsi + rbx]   ; Colocamos en al el valor de la posicion actual de la "matriz"
@@ -40,13 +40,13 @@ mover_personaje:
         cmp rbp, 'd'   ; Si tecla == d el movieminto es a la derecha
         je .derecha
         
-        cmp rbp, 'a'   ; Si tecla == a el movieminto es a la derecha
+        cmp rbp, 'a'   ; Si tecla == a el movieminto es a la izquierda
         je .izquierda
 
-        cmp rbp, 'w'   ; Si tecla == w el movieminto es a la derecha
+        cmp rbp, 'w'   ; Si tecla == w el movieminto es hacia arriba
         je .arriba
 
-        cmp rbp, 's'   ; Si tecla == s el movieminto es a la derecha
+        cmp rbp, 's'   ; Si tecla == s el movieminto es hacia abajo
         je .abajo
     jmp .fin     
 
